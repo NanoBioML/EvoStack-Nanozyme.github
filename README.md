@@ -5,7 +5,7 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![R2 Score](https://img.shields.io/badge/R2_Score-0.87-green.svg)](#performance)
 
-**EvoStack-Nanozyme** is a research-grade machine learning framework designed to predict the physicochemical and kinetic properties of metal-based nanozymes. Developed by **Daniel Zhakupov**, the system implements a patented evolutionary approach to solve the "noisy data" problem in nanomaterials science.
+**EvoStack-Nanozyme** is a research-grade machine learning framework designed to predict the physicochemical and kinetic properties of metal-based nanozymes. Developed by **Daniel Zhakupov**, the system implements an evolutionary approach under patent application to solve the "noisy data" problem in nanomaterials science.
 
 ---
 
