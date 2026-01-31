@@ -14,8 +14,6 @@
 ### Baseline Comparison (Test $R^2$)
 | Target Property | Standard XGBoost | Standard Random Forest | **EvoStack (Ours)** |
 | :--- | :---: | :---: | :---: |
-| **pH** | 0.5022 | 0.5540 | **0.8680** |
-| **Temperature** | -0.8823 | -0.2723 | **0.8670** |
 | **$K_m$** | -0.0957 | -0.0559 | **0.8730** |
 | **$V_{max}$** | -6.28e+04 | -3.33e+04 | **0.8720** |
 | **$K_{cat}$** | -5.28e+10 | -2.46e+10 | **0.8690** |
@@ -27,8 +25,6 @@ All values below reflect performance on a **log-transformed scale** to ensure ro
 
 | Characteristics | $R^2$ (Test) | $R^2$ (CV Mean) | RMSE (Test) | MAE (Test) |
 | :--- | :---: | :---: | :---: | :---: |
-| **pH** | **0.868** | 0.799 | 41.67 | 37.78 |
-| **Temp (°C)** | **0.867** | 0.804 | 41.90 | 37.40 |
 | **$K_m$ (mM)** | **0.873** | 0.798 | 40.94 | 37.09 |
 | **$V_{max}$** | **0.872** | 0.799 | 41.04 | 37.13 |
 | **$K_{cat}$ ($s^{-1}$)** | **0.869** | 0.799 | 41.50 | 37.68 |
