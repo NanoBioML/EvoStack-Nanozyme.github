@@ -2,7 +2,7 @@
 
 [![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-311/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742v1-blue.svg)](https://doi.org/10.26434/chemrxiv.15000742v1)
+[![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742v1-blue.svg)](https://doi.org/10.26434/chemrxiv.15000742/v1)
 
 This repository contains a complete end-to-end system for **rational design of nanozymes** (nanomaterials with enzyme‑like catalytic activity) using a physics‑informed multi‑output machine learning framework. The system integrates:
 
