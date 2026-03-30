@@ -1,58 +1,49 @@
-# NanozymeDesigner: Physics-Informed Multi-Output ML for Enzyme-Mimetic Nanomaterials
+# NanozymeDesigner
+Physics-Informed Multi-Output Machine Learning for Nanozyme Design
 
-[![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/release/python-311/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
-[![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742/v1-blue.svg)](https://doi.org/10.26434/chemrxiv.15000742/v1)
+![Static Badge](https://img.shields.io/badge/Zhakupov-NanozymeDesigner-blue)
+![GitHub top language](https://img.shields.io/github/languages/top/DanielZhakupov/Physics-Informed-Nanozyme)
+![GitHub](https://img.shields.io/github/license/DanielZhakupov/Physics-Informed-Nanozyme)
+![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742/v1-blue)
 
-This repository implements a Physics-Informed Machine Learning (PIML) framework for the rational design and kinetic prediction of nanozymes. By integrating thermodynamic constraints directly into an ensemble learning pipeline, the system predicts Michaelis-Menten parameters (Km, kcat, Vmax) with high physical consistency.
+![Logotype](./docs/header.jpg) 
 
-## Scientific Core
+## Описание
+Программное обеспечение для рационального дизайна нанозимов на стыке биоинженерии и машинного обучения. Система предсказывает кинетические параметры (Km, kcat, Vmax), используя физически-информированные дескрипторы и ансамбли деревьев (ExtraTreesRegressor).
 
-The framework addresses the "black box" nature of traditional ML in catalysis by embedding domain-specific constraints:
+## Установка и запуск (Universal)
+Для работы проекта требуется Python 3.11 или выше. Выполните следующие команды последовательно:
 
-- Thermodynamic Featurization: Integration of Arrhenius-derived activation energies (Ea) tailored for specific catalytic activities (POD, CAT, OX).
-- pH-Dependent Activity Mapping: Implementation of Gaussian-weighted pH zones based on experimental optima (4.0, 7.0, 9.0).
-- Constrained Multi-Output Architecture: A RegressorChain utilizing ExtraTreesRegressor (300 estimators) that enforces the Vmax = kcat * [E]0 relationship.
-- In Silico Structural Construction: Automated generation of FCC-lattice nanocrystals (~55 atoms) with stochastic surface defects and substrate adsorption modeling (XYZ export).
+1. git clone https://github.com/DanielZhakupov/Physics-Informed-Nanozyme.git
+2. cd Physics-Informed-Nanozyme
+3. python -m venv venv
+4. source venv/bin/activate  # Для Windows: venv\Scripts\activate
+5. pip install -r requirements.txt
+6. python designer.py
 
-## Project Structure
+## Документация (docs/ru/)
+Вся пользовательская документация и научные основы проекта находятся в папке docs.
+- [Введение в проект](./docs/ru/intro.md): описание PIML-фреймворка и целей исследования.
+- [Основы Nano-ML](./docs/ru/ml-basics.md): почему ExtraTreesRegressor лучше нейросетей на малых данных (n=86) и как работают физические дескрипторы (Km, Arrhenius factor).
 
-- trainer.py: Preprocessing pipeline & model training (Scikit-learn)
-- designer.py: NanozymeDesigner inference engine & 3D constructor
-- engine_v1.joblib: Pre-trained ensemble weights
-- data/NanozymeDB_curated.csv: Standardized dataset (n=86)
+## Поддержка и зависимости
+По всем вопросам создавайте Issue в репозитории. Проект зависит от библиотек: Scikit-learn, Pandas, NumPy, RDKit.
 
-## Quick Start (Usage Example)
+## Описание коммитов
+| Название | Описание |
+|----------|----------|
+| build | Сборка проекта или изменения внешних зависимостей |
+| science | Изменения в физических константах или термодинамике |
+| feat | Добавление нового функционала (модели, дескрипторы) |
+| fix | Исправление ошибок в расчетах или коде |
+| docs | Обновление документации или README |
+| perf | Оптимизация производительности |
+| style | Правки по кодстайлу (PEP8) |
 
-```python
-from designer import NanozymeDesigner
+## Примеры использования Git
+- git commit -m "science: update activation energy constants for POD"
+- git commit -m "feat: implement substrate SMILES embedding for H2O2"
+- git commit -m "fix: correct Vmax clipping logic in RegressorChain"
 
-# Initialize the PIML Designer
-designer = NanozymeDesigner(model_path="engine_v1.joblib")
-
-# Target: Physiological Catalase Mimic
-result = designer.design_nanozyme(
-    substrate_smiles="OO", 
-    ph=7.4, 
-    temperature=37.0, 
-    target_activity="CAT"
-)
-
-print(f"Top Candidate: {result['champion_element']} | Predicted Vmax: {result['vmax']} nMs-1")
-Model Performance
-Validated on a curated subset of NanozymeDB, the model demonstrates high robustness on low-N datasets through ensemble variance reduction:
-
-Km (mM): R2 (Log-scale) = 0.555 | Accuracy (Within 2x) = 38.9%
-
-kcat (s-1): R2 (Log-scale) = 0.319 | Accuracy (Within 2x) = 16.7%
-
-Vmax (nM/s): R2 (Log-scale) = 0.524 | Accuracy (Within 2x) = 55.6%
-
-Key finding: Feature importance analysis identifies the Arrhenius factor (0.228) and Electronic descriptors (Electronegativity, d-electrons) as primary drivers of catalytic efficiency.
-
-Citation
-If you utilize this framework in your research, please cite the original work:
-Zhakupov, D. (2026). Physics-Informed Multi-Output Machine Learning for Predicting Nanozyme Kinetic Parameters. ChemRxiv. DOI: 10.26434/chemrxiv.15000742/v1
-
-License
-This project is licensed under the MIT License.
+## Лицензия
+Проект распространяется под лицензией MIT.
