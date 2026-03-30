@@ -1,49 +1,67 @@
-# NanozymeDesigner
-Physics-Informed Multi-Output Machine Learning for Nanozyme Design
+# Physics‑Informed Multi‑Output Machine Learning for Nanozyme Kinetic Prediction & Design
 
 ![Static Badge](https://img.shields.io/badge/Zhakupov-NanozymeDesigner-blue)
-![GitHub top language](https://img.shields.io/github/languages/top/DanielZhakupov/Physics-Informed-Nanozyme)
-![GitHub](https://img.shields.io/github/license/DanielZhakupov/Physics-Informed-Nanozyme)
-![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742/v1-blue)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/release/python-311/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![DOI](https://img.shields.io/badge/DOI-10.26434/chemrxiv.15000742v1-blue)](https://doi.org/10.26434/chemrxiv.15000742v1)
 
-![Logotype](./docs/header.jpg) 
 
-## Описание
-Программное обеспечение для рационального дизайна нанозимов на стыке биоинженерии и машинного обучения. Система предсказывает кинетические параметры (Km, kcat, Vmax), используя физически-информированные дескрипторы и ансамбли деревьев (ExtraTreesRegressor).
+## Description
+This repository contains the complete end-to-end system for the rational design of nanozymes using a Physics-Informed Multi-Output (PIML) framework. The project integrates thermodynamic and chemical principles (Arrhenius equation, pH-dependent activity zones) into a RegressorChain model using ExtraTreesRegressor to predict core kinetic parameters: Km, kcat, and Vmax.
 
-## Установка и запуск (Universal)
-Для работы проекта требуется Python 3.11 или выше. Выполните следующие команды последовательно:
+## Installation & Quick Start
+Ensure you have Python 3.11 or higher installed. Follow these steps:
 
-1. git clone https://github.com/DanielZhakupov/Physics-Informed-Nanozyme.git
+1. git clone [https://github.com/DanielZhakupov/Physics-Informed-Nanozyme.git](https://github.com/DanielZhakupov/Physics-Informed-Nanozyme.git)
 2. cd Physics-Informed-Nanozyme
 3. python -m venv venv
-4. source venv/bin/activate  # Для Windows: venv\Scripts\activate
+4. source venv/bin/activate  # For Windows: venv\Scripts\activate
 5. pip install -r requirements.txt
-6. python designer.py
+6. python trainer.py        # Trains the Multi-Output Physics Model
+7. python designer.py       # Launches the end-to-end generative design loop
 
-## Документация (docs/ru/)
-Вся пользовательская документация и научные основы проекта находятся в папке docs.
-- [Введение в проект](./docs/ru/intro.md): описание PIML-фреймворка и целей исследования.
-- [Основы Nano-ML](./docs/ru/ml-basics.md): почему ExtraTreesRegressor лучше нейросетей на малых данных (n=86) и как работают физические дескрипторы (Km, Arrhenius factor).
+## Repository Structure
+- **trainer.py**: Script to train the PIML model on experimental data.
+- **designer.py**: Main engine for semantic audit, metal filtering, and 3D generation.
+- **data/nanozyme_dataset.csv**: Curated dataset from NanozymeDB (n=86).
+- **docs/ru/**: User documentation (Introduction & ML fundamentals).
+- **designer_output/**: Auto-generated results (XYZ structures, Sabatier plots).
 
-## Поддержка и зависимости
-По всем вопросам создавайте Issue в репозитории. Проект зависит от библиотек: Scikit-learn, Pandas, NumPy, RDKit.
+## Usage Example
 
-## Описание коммитов
-| Название | Описание |
+    from designer import NanozymeDesigner
+
+    designer = NanozymeDesigner()
+    result = designer.design_nanozyme(
+        substrate_smiles="OO",      # hydrogen peroxide
+        temperature=37.0,           # Celsius
+        ph=7.4,                     # physiological pH
+        target_activity="CAT"       # catalase-like activity
+    )
+
+    print(f"Champion Candidate: {result['final_champion']['metal']}-based core")
+
+
+## Model Performance (R2)
+- **Km (mM):** 0.555 (Within 2x factor: 38.9%)
+- **kcat (s-1):** 0.319 (Within 2x factor: 16.7%)
+- **Vmax (nM/s):** 0.524 (Within 2x factor: 55.6%)
+- **Learned Ea:** Peroxidase (1.40 eV), Catalase (0.80 eV)
+
+## Conventional Commits Reference
+| Type | Description |
 |----------|----------|
-| build | Сборка проекта или изменения внешних зависимостей |
-| science | Изменения в физических константах или термодинамике |
-| feat | Добавление нового функционала (модели, дескрипторы) |
-| fix | Исправление ошибок в расчетах или коде |
-| docs | Обновление документации или README |
-| perf | Оптимизация производительности |
-| style | Правки по кодстайлу (PEP8) |
+| build | Build system changes or external dependencies |
+| science | Updates to physical constants or thermodynamics |
+| feat | New features (descriptors, model architectures) |
+| fix | Bug fixes in calculations or code logic |
+| docs | Documentation or README updates |
+| perf | Performance optimizations for the algorithm |
+| style | Code style changes (PEP8 compliance) |
 
-## Примеры использования Git
-- git commit -m "science: update activation energy constants for POD"
-- git commit -m "feat: implement substrate SMILES embedding for H2O2"
-- git commit -m "fix: correct Vmax clipping logic in RegressorChain"
+## Citation
+If you utilize this framework, please cite:
+> Zhakupov, Daniel. "Physics-Informed Multi-Output Machine Learning for Predicting Nanozyme Kinetic Parameters". ChemRxiv, 2026. DOI: 10.26434/chemrxiv.15000742.v1
 
-## Лицензия
-Проект распространяется под лицензией MIT.
+## License
+Licensed under the MIT License.
